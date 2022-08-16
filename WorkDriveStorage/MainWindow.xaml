@@ -1,0 +1,239 @@
+﻿<Window xmlns:CustomControls="clr-namespace:WorkDriveStorage.CustomControls"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkDriveStorage"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:View="clr-namespace:WorkDriveStorage.View"  x:Class="WorkDriveStorage.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="900"
+        Width="1438"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip" SizeChanged="Window_SizeChanged">
+
+    <Border x:Name="borderMain" 
+            CornerRadius="20"
+            Background="White" 
+            BorderBrush="Black"
+            MouseDown="Border_MouseDown">
+        <!-- Main Menu -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="210"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 좌측 -->
+            <Grid Grid.Column="0">
+                <StackPanel>
+                    <TextBlock Text="drive."
+                               Margin="65,50,0,0" 
+                               Foreground="#515EC1"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="21"
+                               FontFamily="Arial Rounded MT Bold"/>
+
+                    <!-- Main -->
+                    <CustomControls:MenuButton x:Name="btn_Menu_MainView"
+                                               Margin="60 70 0 0"
+                                               ButtonIconImage="cube"
+                                               ButtonText="MainView"
+                                               Button_Click="btn_Menu_Button_Click"/>
+
+                    <StackPanel Margin="0 100 0 0">
+                        <TextBlock Margin="65,0"
+                                   Text="WORK FILES"
+                                   Style="{StaticResource TitleText}"/>
+
+                        <CustomControls:MenuButton x:Name="btn_Menu_Project"
+                                                   Margin="60 0 0 0"
+                                                   ButtonIconImage="FolderOpen"
+                                                   ButtonText="Project"
+                                                   Description="프로젝트 관리"
+                                                   Button_Click="btn_Menu_Button_Click"/>
+
+                        <CustomControls:MenuButton x:Name="btn_Menu_Calendar"
+                                                   Margin="60 0 0 0"
+                                                   ButtonIconImage="CalendarMonth"
+                                                   ButtonText="Calendar"
+                                                   Description="일정 관리"
+                                                   Button_Click="btn_Menu_Button_Click"/>
+
+                        <CustomControls:MenuButton x:Name="btn_Menu_Memo"
+                                                   Margin="60 0 0 0"
+                                                   ButtonIconImage="BookOpenVariant"
+                                                   ButtonText="Memo"
+                                                   Description="메모"
+                                                   Button_Click="btn_Menu_Button_Click"/>
+
+                    </StackPanel>
+
+                    <StackPanel Margin="0 100 0 0">
+                        <TextBlock Margin="65,0"
+                                   Text="SETTING"
+                                   Style="{StaticResource TitleText}"/>
+
+                        <CustomControls:MenuButton x:Name="btn_Menu_Projesct"
+                                                   Margin="60 0 0 0"
+                                                   ButtonIconImage="Cog"
+                                                   ButtonText="Setting"
+                                                   Description="설정"
+                                                   Button_Click="btn_Menu_Button_Click"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- 하단 이미지 -->
+                <Grid VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center" 
+                      Margin="0,0,0,49">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Ellipse Height="36" Width="36" 
+                             HorizontalAlignment="Left" 
+                             VerticalAlignment="Bottom">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/resources/profile1.jpg" 
+                                        Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Grid Grid.Column="1"
+                          Margin="14,0,0,0" 
+                          Width="76">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Seokjoon." 
+                                   Style="{StaticResource MainText}"/>
+                        <TextBlock Grid.Row="1" 
+                                   Text="PREMIUM USER" 
+                                   Style="{StaticResource TitleText}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- 중앙 -->
+            <Grid Grid.Column="1" Background="#EFF2F8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="txt_View_Name" 
+                               Margin="30,20,0,0" 
+                               Foreground="#515EC1"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="30"
+                               FontFamily="Arial Rounded MT Bold"/>
+                    <TextBlock x:Name="txt_View_Description" 
+                               Margin="15,30,0,0" 
+                               Foreground="#FF898989"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="15"
+                               FontFamily="Arial Rounded MT Bold"/>
+                </StackPanel>
+                <!--<Grid x:Name="Panl_View" Grid.Row="1">
+                    <View:ProjectPage/>
+                </Grid>-->
+                <DockPanel  x:Name="Panl_View" Grid.Row="1">
+                </DockPanel>
+            </Grid>
+
+            <!-- 우측 -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel x:Name="DockPanel_TitlePanel"
+                           Margin="0 0 0 0"
+                           Height="35"
+                           Grid.Row="0">
+                    <!-- 닫기 -->
+                    <Button Click="btn_Exit_Click"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Width="30"
+                            Margin="0 -2 20 0"
+                            Height="30"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}" 
+                            Padding="0"
+                            Foreground="#FF2C2C2C">
+                        <materialDesign:PackIcon Kind="CloseThick"/>
+                    </Button>
+                    <!-- 최대화 -->
+                    <Button Click="btn_Window_Maximized_Click" 
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            DockPanel.Dock="Right"
+                            Margin="0 -2 0 0"
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}"
+                            Padding="0" 
+                            Foreground="#FF2C2C2C" >
+                        <materialDesign:PackIcon Kind="WindowMaximize"/>
+                    </Button>
+                    <!-- 최소화 -->
+                    <Button Click="btn_Window_Minimized_Click" 
+                            Width="30"
+                            Height="30" 
+                            Margin="0 -2 0 0"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}"
+                            Padding="0" 
+                            Foreground="#FF2C2C2C" Cursor="Hand" >
+                        <materialDesign:PackIcon Kind="MinusThick"/>
+                    </Button>
+                </DockPanel>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Statistics"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top"
+                               Margin="20,50,0,0" 
+                               FontSize="18" 
+                               FontWeight="SemiBold"/>
+
+                    <Border CornerRadius="10" 
+                            Margin="10 30 15 0"
+                            Height="70"
+                            Background="#EFF2F8">
+                        <StackPanel Orientation="Horizontal">
+                            <CustomControls:CircularProgressBar x:Name="bar1" 
+                                                             Value="65"
+                                                             Margin="20 0 0 0"/>
+                            <TextBlock 
+                                       FontSize="10" 
+                                       FontWeight="SemiBold" 
+                                       VerticalAlignment="Center" 
+                                       Foreground="Black" 
+                                       Margin="30,0,0,0"><Run Text="Project"/><LineBreak/><Run Text="Run State"/></TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="10" 
+                            Margin="10 30 15 0"
+                            Height="70"
+                            Background="#EFF2F8"/>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

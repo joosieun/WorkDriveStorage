@@ -1,0 +1,39 @@
+﻿<UserControl xmlns:CustomControls="clr-namespace:WorkDriveStorage.CustomControls"  x:Class="WorkDriveStorage.View.MemoPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkDriveStorage.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Height="Auto" 
+             Width="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel  Orientation="Horizontal">
+                <!-- 저장 -->
+                <Button Name="btnMemoAdd"                            
+                        Margin="20 0 0 0"
+                        Width="50"
+                        Height="40"
+                        Background="#515EC1"
+                        Click="btnAddMemo_Click"
+                        BorderBrush="{x:Null}" Cursor="Hand">
+                    <materialDesign:PackIcon Kind="PencilPlusOutline"
+                                             Grid.Column="0"                                     
+                                             Width="20" 
+                                             Height="20" 
+                                             Foreground="#FFFFFF" 
+                                             VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <WrapPanel Name="MainPanel"
+                   Grid.Row="1"
+                   Margin="7"/>
+    </Grid>
+</UserControl>

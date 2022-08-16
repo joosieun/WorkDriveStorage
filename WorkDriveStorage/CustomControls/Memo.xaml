@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="WorkDriveStorage.CustomControls.Memo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkDriveStorage.CustomControls"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Height="Auto" 
+             Width="Auto">
+    <Grid>
+        <materialDesign:Card Name="MemoCard" 
+                             Width="235"
+                             Height="150"
+                             MouseDoubleClick="Card_DoubleClick"
+                             MouseEnter="Card_MouseEnter"
+                             MouseLeave="Card_MouseLeave">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"    
+                            Margin="8 10 8 0">
+                    <TextBlock Name="Name" 
+                               FontWeight="Bold" 
+                               Text="{Binding MemoName}"
+                               Margin="0 0 0 5"/>
+                    <TextBlock TextWrapping="Wrap"       
+                               Text="{Binding Contents}" 
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right"
+                            Grid.Row="2"
+                            Orientation="Horizontal"
+                            Margin="8">
+                    <Button Style="{StaticResource MaterialDesignToolButton}"
+                            Width="30"
+                            Padding="2 0 2 0"
+                            materialDesign:RippleAssist.IsCentered="True">
+                        <materialDesign:PackIcon Kind="ShareVariant" />
+                    </Button>
+                    <materialDesign:PopupBox Padding="2 0 2 0">
+                        <StackPanel>
+                            <Button Content="삭제" />
+                            <Button Content="추가" />
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

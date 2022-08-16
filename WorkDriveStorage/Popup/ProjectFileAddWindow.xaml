@@ -1,0 +1,62 @@
+﻿<Window x:Class="WorkDriveStorage.Popup.ProjectFileAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkDriveStorage.Popup"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="App File"
+        Height="200" 
+        Width="505"
+        ResizeMode="CanMinimize">
+    
+    <DockPanel LastChildFill="False">
+        <StackPanel Name="ConfigControl" DockPanel.Dock="Top">
+
+            <TextBox   
+                Margin="10,5,10,0" 
+                Name="txtGroupNmae"            
+                materialDesign:HintAssist.Hint="Group Name" 
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                VerticalAlignment="Center" Cursor="Arrow"/>
+
+            <DockPanel LastChildFill="False" Margin="10,5,10,0" >
+                <TextBox
+                    Name="txtFilePath"
+                    materialDesign:HintAssist.Hint="File Path" 
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                    VerticalAlignment="Center" 
+                    IsReadOnly="True"
+                    Width="417" Height="35"/>
+                <Button  
+                    Margin="5 0 0 0"
+                    Content="{materialDesign:PackIcon DotsHorizontal}"  
+                    DockPanel.Dock="Right"
+                    Background="#72c267"
+                    BorderBrush="#72c267"
+                    ToolTip="Icon" Width="47" 
+                    Click="btnGetFilePath_Click" />
+            </DockPanel>
+
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+            <Button 
+                Width="100"
+                Margin="0,0,5,10"
+                DockPanel.Dock="Right"
+                Background="#72c267"
+                BorderBrush="#72c267"
+                Content="Exit" 
+                Click="ExitButton_Click"/>
+            <Button 
+                Width="100"
+                Margin="0,0,5,10"
+                DockPanel.Dock="Right"
+                Background="#72c267"
+                BorderBrush="#72c267"
+                Content="Add" 
+                Click="AddButton_Click"/>
+        </DockPanel>
+    </DockPanel>
+</Window>

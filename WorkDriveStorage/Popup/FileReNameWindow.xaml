@@ -1,0 +1,46 @@
+﻿<Window x:Class="WorkDriveStorage.Popup.FileReNameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkDriveStorage.Popup"
+        mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="File ReName"
+        Height="150" 
+        Width="500"
+        ResizeMode="CanMinimize">
+    <DockPanel LastChildFill="False">
+        <StackPanel Name="ConfigControl" DockPanel.Dock="Top">
+
+            <TextBox   
+                Margin="10,5,10,0" 
+                Name="txtName"            
+                TabIndex="0"
+                materialDesign:HintAssist.Hint="File Name" 
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                VerticalAlignment="Center" Cursor="Arrow"/>
+
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+            <Button 
+                Width="100"
+                Margin="0,0,5,10"
+                DockPanel.Dock="Right"
+                Background="#72c267"
+                BorderBrush="#72c267"
+                Content="Exit" 
+                TabIndex="2"
+                Click="ExitButton_Click"/>
+            <Button 
+                Width="100"
+                Margin="0,0,5,10"
+                TabIndex="1"
+                DockPanel.Dock="Right"
+                Background="#72c267"
+                BorderBrush="#72c267"
+                Content="Add" 
+                Click="AddButton_Click"/>
+        </DockPanel>
+    </DockPanel>
+</Window>

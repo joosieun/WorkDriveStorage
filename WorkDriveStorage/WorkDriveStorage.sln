@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkDriveStorage", "WorkDriveStorage.csproj", "{1AC83748-2372-440D-9662-6433A8359969}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkDriveStorage.FrameWork", "..\WorkDriveStorage.FrameWork\WorkDriveStorage.FrameWork.csproj", "{F14D8925-6B19-486F-992C-1A26AB25A42E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.FrameWork", "0.FrameWork", "{8BFC9286-BE76-4D9E-8A0C-1EA9D172E7CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AC83748-2372-440D-9662-6433A8359969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC83748-2372-440D-9662-6433A8359969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC83748-2372-440D-9662-6433A8359969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC83748-2372-440D-9662-6433A8359969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14D8925-6B19-486F-992C-1A26AB25A42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14D8925-6B19-486F-992C-1A26AB25A42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14D8925-6B19-486F-992C-1A26AB25A42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14D8925-6B19-486F-992C-1A26AB25A42E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F14D8925-6B19-486F-992C-1A26AB25A42E} = {8BFC9286-BE76-4D9E-8A0C-1EA9D172E7CA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA4AE379-8237-409E-A084-8FB96097BA5C}
+	EndGlobalSection
+EndGlobal
