@@ -108,7 +108,6 @@ namespace WorkDriveStorage.FrameWork
 
         public static string GetFilePath()
         {
-            StringBuilder sb = new StringBuilder();
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -116,45 +115,11 @@ namespace WorkDriveStorage.FrameWork
                 openFileDialog.ShowDialog();
                 if (openFileDialog.FileName.Length > 0)
                 {
-                    for (int i = 0; i < openFileDialog.FileNames.Length; i++)
-                    {
-                        //list.Add(openFileDialog.FileNames[i]);
-                        sb.AppendLine(openFileDialog.FileNames[i]);
-                    }
-                    
-                    return sb.ToString();
+                    return openFileDialog.FileName;
                 }
                 else
                 {
                     return "";
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static List<FileInfo> GetFilesPath()
-        {
-            List<FileInfo> list = new List<FileInfo>();
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Multiselect = true;
-                openFileDialog.ShowDialog();
-                if (openFileDialog.FileName.Length > 0)
-                {
-                    for (int i = 0; i < openFileDialog.FileNames.Length; i++)
-                    {
-                        list.Add(new FileInfo(openFileDialog.FileNames[i]));
-                    }
-
-                    return list;
-                }
-                else
-                {
-                    return list;
                 }
             }
             catch (Exception ex)
