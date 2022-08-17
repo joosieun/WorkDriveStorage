@@ -26,24 +26,41 @@ namespace WorkDriveStorage.View
         public MemoPage()
         {
             InitializeComponent();
-            init();
+            ItemLoad();
         }
 
-        private void init()
+        private void ItemLoad()
         {
-            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData("GetDataMemoAll", "0001");
+            MainPanel.Children.Clear();
+            MemoServiceProvider.StaticService().MemoDelete -= MemoPage_ReLoad;
+            MemoServiceProvider.StaticService().MemoDelete += MemoPage_ReLoad;
 
-            foreach (DataRow row in dt.Rows)
+            MemoServiceProvider.StaticService().MemoValeChanged -= MemoPage_ReLoad;
+            MemoServiceProvider.StaticService().MemoValeChanged += MemoPage_ReLoad;
+
+            Dictionary<string, MemoItem> items = MemoServiceProvider.StaticService().GetMemoItemAll();
+            foreach (KeyValuePair<string, MemoItem> item in items)
             {
-                Memo memo = new Memo(row["Sequence"].ToString(), row["Name"].ToString(), row["Contents"].ToString());                
-                memo.Margin = new Thickness(7);
-                MainPanel.Children.Add(memo);
+                WrapPanel wrapPanel = (WrapPanel)item.Value.Parent;
+                if (wrapPanel != null)
+                    wrapPanel.Children.Clear();
             }
+
+            foreach (KeyValuePair<string, MemoItem> item in items)
+            {
+                MainPanel.Children.Add(item.Value);
+            }
+        }
+
+        private void MemoPage_ReLoad()
+        {
+            ItemLoad();
         }
 
         private void btnAddMemo_Click(object sender, RoutedEventArgs e)
         {
-
+            MemoServiceProvider.StaticService().Add();
+            ItemLoad();
         }
     }
 }
