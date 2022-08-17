@@ -76,11 +76,8 @@
     <Compile Include="CustomControls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\Memo.xaml.cs">
-      <DependentUpon>Memo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\MemoWindow.xaml.cs">
-      <DependentUpon>MemoWindow.xaml</DependentUpon>
+    <Compile Include="CustomControls\MemoItem.xaml.cs">
+      <DependentUpon>MemoItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\MessageBox.cs" />
     <Compile Include="CustomControls\MessageBoxWindow.xaml.cs">
@@ -89,11 +86,15 @@
     <Compile Include="CustomControls\ProjectTree.xaml.cs">
       <DependentUpon>ProjectTree.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MemoServiceProvider.cs" />
     <Compile Include="Popup\FileReNameWindow.xaml.cs">
       <DependentUpon>FileReNameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popup\GroupAddWindow.xaml.cs">
       <DependentUpon>GroupAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\MemoWindow.xaml.cs">
+      <DependentUpon>MemoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popup\ProjectAddWindow.xaml.cs">
       <DependentUpon>ProjectAddWindow.xaml</DependentUpon>
@@ -117,13 +118,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomControls\Memo.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="CustomControls\MemoItem.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\MemoWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\MenuButton.xaml">
       <SubType>Designer</SubType>
@@ -159,6 +156,10 @@
     <Page Include="Popup\GroupAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\MemoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Popup\ProjectAddWindow.xaml">
       <SubType>Designer</SubType>

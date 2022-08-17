@@ -1,0 +1,82 @@
+﻿<Window x:Class="WorkDriveStorage.Popup.MemoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkDriveStorage.Popup"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Height="400"
+        Width="300"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Closed="Window_Closed"
+        ResizeMode="CanResizeWithGrip">
+
+    <Window.Resources>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="33"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="33"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+    <Border BorderBrush="Black" BorderThickness="0.5">
+        <Grid Background="White">
+
+            <DockPanel>
+                <Grid Panel.ZIndex ="1"
+                      x:Name="GridMenu"
+                      Height="33"
+                      Margin="0 -34 0 0"
+                      DockPanel.Dock="Top"
+                      Background="Gray"                  
+                      MouseDown="DockPanel_MouseDown"
+                      RenderTransformOrigin="0.5,0.5">
+                    
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+
+                    <DockPanel Name="TitlePanel"
+                           Height="30">
+                        <!-- 닫기 -->
+                        <Button x:Name="ButtonFechar"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Width="33"
+                            Margin="0 -6 6 0"
+                            Height="30"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}" 
+                            Padding="0"
+                            Foreground="#FF2C2C2C"
+                            Click="ExitButton_Click">
+                            <materialDesign:PackIcon Kind="CloseThick"/>
+                        </Button>
+
+                    </DockPanel>
+                </Grid>
+                <RichTextBox x:Name="txtMemo"
+                             IsKeyboardFocusedChanged="txtMemo_FocusableChanged"
+                             Margin="5 38 5 5"
+                             HorizontalScrollBarVisibility="Auto" 
+                             VerticalScrollBarVisibility="Auto" Cursor="Arrow"/>
+            </DockPanel>
+        </Grid>
+    </Border>
+</Window>
