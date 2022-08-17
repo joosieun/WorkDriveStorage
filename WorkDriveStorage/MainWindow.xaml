@@ -14,10 +14,14 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        ResizeMode="CanResizeWithGrip" SizeChanged="Window_SizeChanged">
+        ResizeMode="CanResizeWithGrip"
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing">
+
 
     <Border x:Name="borderMain" 
             CornerRadius="20"
+            BorderThickness="0.5"
             Background="White" 
             BorderBrush="Black"
             MouseDown="Border_MouseDown">

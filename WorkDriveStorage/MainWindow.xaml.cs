@@ -49,6 +49,9 @@ namespace WorkDriveStorage
             }
             else
             {
+                MemoServiceProvider.StaticService();
+                MemoServiceProvider.StaticService().MemoWindowInit();
+
                 txt_View_Name.Text = "MainView";
                 txt_View_Description.Text = "";
                 Panl_View.Children.Add(new MainPage());
@@ -83,7 +86,7 @@ namespace WorkDriveStorage
                     break;
                 case Constant.PageName.Calendar:
                     break;
-            }            
+            }
         }
 
         #region 윈도우 창 컨트롤
@@ -153,6 +156,11 @@ namespace WorkDriveStorage
                 borderMain.CornerRadius = new CornerRadius(0);
                 DockPanel_TitlePanel.Margin = new Thickness(0, 10, 0, 0);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MemoServiceProvider.StaticService().Dispose();
         }
     }
 }

@@ -56,6 +56,12 @@ namespace WorkDriveStorage.FrameWork
                 _db.ExecuteNonQuery(GetQueryString.SQLite.GetQueryCreateWorkList);
             }
 
+            existTalbe = _db.TableExists("TB_MEMO");
+            if (existTalbe != null && existTalbe == false)
+            {
+                _db.ExecuteNonQuery(GetQueryString.SQLite.GetQueryCreateMemo);
+            }
+
             existTalbe = _db.TableExists("TB_QUERY");
             if (existTalbe != null && existTalbe == false)
             {
