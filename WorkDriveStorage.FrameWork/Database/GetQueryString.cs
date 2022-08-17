@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WorkDriveStorage.FrameWork.Database
 {
-    public class GetQueryString
-    {
-        public class SQLite
-        {
-            public const string GetQueryCreateDocument = @"
+	public class GetQueryString
+	{
+		public class SQLite
+		{
+			public const string GetQueryCreateDocument = @"
 CREATE TABLE ""TB_DOCUMENT"" (
 	""ProjectName""	TEXT,
 	""DocumentName""	TEXT,
@@ -47,7 +47,7 @@ CREATE TABLE ""TB_WORKLIST"" (
 	""CreateTime""	TEXT NOT NULL,
 	""CompletionTime""	TEXT,
 	PRIMARY KEY(""WorkName"")
-);";			
+);";
 			public const string GetQueryCreateMenu = @"
 CREATE TABLE ""TB_MENU"" (
 	""Sequence""	INTEGER,
@@ -65,6 +65,17 @@ CREATE TABLE ""TB_QUERY"" (
 	""Query""	TEXT,
 	PRIMARY KEY(""Name"")
 );";
+
+			public const string GetQueryCreateMemo = @"
+CREATE TABLE ""TB_MEMO"" (
+	""Sequence""	INTEGER,
+	""Contents""	TEXT,
+	""ContentsRTF""	TEXT,
+	""WallPaper""	TEXT,
+	""Location""	TEXT,
+	PRIMARY KEY(""Sequence"" AUTOINCREMENT)
+);
+";
 
 			public const string GetQueryInsertQueryData = @"
 INSERT INTO TB_QUERY
@@ -139,10 +150,31 @@ ORDER BY LastEventTime DESC');
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
 VALUES('SetDocumentFileReName', '0001', 'UPDATE TB_DOCUMENT SET DocumentName=@name, Path = @newPath WHERE Path = @oldPath');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('GetDataStickerMemoAll', '0001', 'SELECT * FROM TB_MEMO');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('SetStickerMemoAdd', '0001', 'INSERT INTO TB_MEMO (WallPaper) VALUES (@WallPaper) ');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('SetStickerMemoUpdate', '0001', 'UPDATE TB_MEMO SET Contents = @Contents, ContentsRTF = @ContentRTF WHERE Sequence = @Sequence');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('GetDataStickerMemoMaxSequence', '0001', 'SELECT MAX(Sequence) FROM TB_MEMO');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('SetStickerMemoWallPaperChanged', '0001', 'UPDATE TB_MEMO SET WallPaper=@WallPaper WHERE Sequence = @Sequence');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('SetStickerMemoLocationChanged', '0001', 'UPDATE TB_MEMO SET Location=@Location WHERE Sequence = @Sequence');
+INSERT INTO TB_QUERY
+(Name, Version, ""Query"")
+VALUES('SetStickerMemoDelete', '0001', 'DELETE FROM TB_MEMO WHERE Sequence=@SequenceDELETE FROM TB_MEMO WHERE Sequence=@Sequence');
 
 ";
 
 			public const string GetQueryString = @"SELECT Query FROM TB_QUERY WHERE Name=@Name AND Version=@Version ";
 		}
-    }
+	}
 }
