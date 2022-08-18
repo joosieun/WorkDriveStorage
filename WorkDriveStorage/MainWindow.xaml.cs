@@ -50,7 +50,7 @@ namespace WorkDriveStorage
             else
             {
                 MemoServiceProvider.StaticService();
-                MemoServiceProvider.StaticService().MemoWindowInit();
+
 
                 txt_View_Name.Text = "MainView";
                 txt_View_Description.Text = "";
@@ -161,6 +161,11 @@ namespace WorkDriveStorage
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MemoServiceProvider.StaticService().Dispose();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MemoServiceProvider.StaticService().MemoWindowInit();
         }
     }
 }
