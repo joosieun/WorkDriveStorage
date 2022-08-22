@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WorkDriveStorage.CustomControls.MessageBox;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 using WorkDriveStorage.Popup;
 
 namespace WorkDriveStorage.CustomControls
@@ -56,9 +57,9 @@ namespace WorkDriveStorage.CustomControls
             parameters.Add("ProjectName", projectName);
 
             if (_fileType == Constant.FileType.Document)
-                dt = ServiceProvider.StaticService().MainDatabase.GetData("GetDataDocument", "0001", parameters);
+                dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetDataDocument, parameters);
             else
-                dt = ServiceProvider.StaticService().MainDatabase.GetData("GetDataSource", "0001", parameters);
+                dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetDataSource, parameters);
 
             Dictionary<string, TreeViewItem> groupTreeDir = new Dictionary<string, TreeViewItem>();
             DataTable dtGroup = dt.DefaultView.ToTable(true, "GroupName");
@@ -152,9 +153,9 @@ namespace WorkDriveStorage.CustomControls
 
                         bool result = false;
                         if (_fileType == Constant.FileType.Document)
-                            result = ServiceProvider.StaticService().MainDatabase.SetData("SetDocumentDelete", "0001", parameters);
+                            result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetDocumentDelete, parameters);
                         else
-                            result = ServiceProvider.StaticService().MainDatabase.SetData("SetSourceDelete", "0001", parameters);
+                            result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetSourceDelete, parameters);
 
                         if (result)
                         {
@@ -459,9 +460,9 @@ namespace WorkDriveStorage.CustomControls
 
                     bool result = false;
                     if (_fileType == Constant.FileType.Document)
-                        result = ServiceProvider.StaticService().MainDatabase.SetData("SetDocumentLastTimeUpdate", "0001", parameters);
+                        result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetDocumentLastTimeUpdate, parameters);
                     else
-                        result = ServiceProvider.StaticService().MainDatabase.SetData("SetSourceLastTimeUpdate", "0001", parameters);
+                        result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetSourceLastTimeUpdate, parameters);
                 }
                 else
                 {
@@ -540,12 +541,12 @@ namespace WorkDriveStorage.CustomControls
             {
                 parameters.Add("oldPath", _sourceItem.Tag.ToString());
                 parameters.Add("newPath", updatePath);
-                result = ServiceProvider.StaticService().MainDatabase.SetData("SetDocumentMove", "0001", parameters);
+                result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetDocumentMove, parameters);
             }
             else
             {
                 parameters.Add("Path", _sourceItem.Tag.ToString());
-                result = ServiceProvider.StaticService().MainDatabase.SetData("SetSourceMove", "0001", parameters);
+                result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetSourceMove, parameters);
             }
 
             if (result)

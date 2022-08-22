@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WorkDriveStorage.FrameWork.Database;
 
 namespace WorkDriveStorage.FrameWork
 {
@@ -290,11 +291,11 @@ namespace WorkDriveStorage.FrameWork
             param.Add("LastEventTime", nowTime);
 
             if (Constant.FileType.Document == fileType)
-                result = ServiceProvider.StaticService().MainDatabase.SetData("SetDocumentAdd", "0001", param);
+                result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetDocumentAdd, param);
             else
             {
                 param.Add("Type", "C#");
-                result = ServiceProvider.StaticService().MainDatabase.SetData("SetSourceAdd", "0001", param);
+                result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetSourceAdd, param);
             }
 
             return result;

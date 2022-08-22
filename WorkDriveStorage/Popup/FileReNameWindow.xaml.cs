@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WorkDriveStorage.CustomControls.MessageBox;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 
 namespace WorkDriveStorage.Popup
 {
@@ -51,7 +52,7 @@ namespace WorkDriveStorage.Popup
                     parameters.Add("oldPath", oldFileinfo.FullName);
                     parameters.Add("newPath", fi.FullName);
 
-                    bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetDocumentFileReName", "0001", parameters);
+                    bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetDocumentFileReName, parameters);
 
                     if (result == false)
                         CustomControlMessageBox.ShowError("파일 이름 변경 완료 / DB 업데이트 실패");

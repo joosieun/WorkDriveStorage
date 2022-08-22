@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 
 namespace WorkDriveStorage.Popup
 {
@@ -59,7 +60,7 @@ namespace WorkDriveStorage.Popup
             param.Add("Contents", memoText.Replace("'", "''"));
             param.Add("ContentRTF", memoRtf.Replace("'", "''"));
             param.Add("Sequence", _memoKey);
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoUpdate", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoUpdate, param);
             MemoServiceProvider.StaticService().MemoWindow_MemoValeChanged(_memoKey, GetText());
 
         }
@@ -165,9 +166,31 @@ namespace WorkDriveStorage.Popup
             target.Focus();
         }
 
+        public void SetSize(double width, double height)
+        {
+            this.Width = width;
+            this.Height = height;
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             MemoServiceProvider.StaticService().MemoWindowClose(_memoKey);
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            MemoServiceProvider.StaticService().Add(true);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            MemoServiceProvider.StaticService().Delete(_memoKey);
+            this.Close();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MemoServiceProvider.StaticService().MemoWindowSizeChanged(_memoKey, this.Width + "," + this.Height);            
         }
     }
 }

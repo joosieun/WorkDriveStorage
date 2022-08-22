@@ -13,6 +13,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Closed="Window_Closed"
+        SizeChanged="Window_SizeChanged"
         ResizeMode="CanResizeWithGrip">
 
     <Window.Resources>
@@ -32,8 +33,12 @@
 
     <Border BorderBrush="Black" BorderThickness="0.5">
         <Grid Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="287*"/>
+            </Grid.ColumnDefinitions>
 
-            <DockPanel>
+            <DockPanel Grid.ColumnSpan="2">
                 <Grid Panel.ZIndex ="1"
                       x:Name="GridMenu"
                       Height="33"
@@ -42,7 +47,7 @@
                       Background="Gray"                  
                       MouseDown="DockPanel_MouseDown"
                       RenderTransformOrigin="0.5,0.5">
-                    
+
                     <Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -69,6 +74,35 @@
                             <materialDesign:PackIcon Kind="CloseThick"/>
                         </Button>
 
+                        <!-- 추가 -->
+                        <Button x:Name="ButtonAdd"
+                            DockPanel.Dock="Left"
+                            HorizontalAlignment="Left"
+                            Width="33"
+                            Margin="0 0 6 0"
+                            Height="30"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}" 
+                            Padding="0"
+                            Foreground="#FF2C2C2C"
+                            Click="AddButton_Click">
+                            <materialDesign:PackIcon Kind="MessagePlus"/>
+                        </Button>
+
+                        <!-- 추가 -->
+                        <Button x:Name="ButtonDelete"
+                            DockPanel.Dock="Left"
+                            HorizontalAlignment="Left"
+                            Width="33"
+                            Margin="0 0 6 0"
+                            Height="30"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}" 
+                            Padding="0"
+                            Foreground="#FF2C2C2C"
+                            Click="DeleteButton_Click" Cursor="Hand">
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
                     </DockPanel>
                 </Grid>
                 <RichTextBox x:Name="txtMemo"

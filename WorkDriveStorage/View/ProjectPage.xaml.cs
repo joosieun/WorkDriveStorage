@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WorkDriveStorage.CustomControls.MessageBox;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 using WorkDriveStorage.Popup;
 
 namespace WorkDriveStorage.View
@@ -50,7 +51,7 @@ namespace WorkDriveStorage.View
 
         private void initComboBox()
         {
-            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData("GetProjectAllName", "0001");
+            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetProjectAllName);
 
             List<string> targetLIst = (from r in dt.AsEnumerable()
                                        select r.Field<string>("ProjectName")).ToList();
@@ -64,7 +65,7 @@ namespace WorkDriveStorage.View
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("ProjectName", cbProjectList.SelectedItem.ToString());
-            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData("GetProjectMemo", "0001", parameters);
+            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetProjectMemo, parameters);
             SetRTFText(dt.Rows[0]["MemoRtf"].ToString());
         }
 
@@ -104,7 +105,7 @@ namespace WorkDriveStorage.View
                 parameters.Add("ProjectName", cbProjectList.SelectedItem.ToString());
                 parameters.Add("MemoRtf", memoRtf.Replace("'", "''"));
                 parameters.Add("MemoString", memoText.Replace("'", "''"));
-                bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetMemoUpdate", "0001", parameters);
+                bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetMemoUpdate, parameters);
 
                 if (result)
                     CustomControlMessageBox.Show("저장 성공");

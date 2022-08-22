@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WorkDriveStorage.CustomControls.MessageBox;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 
 namespace WorkDriveStorage.Popup
 {
@@ -39,7 +40,7 @@ namespace WorkDriveStorage.Popup
                 parameters.Add("ProjectName", txtName.Text);
                 parameters.Add("CreateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 
-                bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetProjectAdd", "0001", parameters);
+                bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetProjectAdd, parameters);
 
                 if (result)
                     CustomControlMessageBox.Show("등록 성공", "Project Add");

@@ -58,14 +58,6 @@ CREATE TABLE ""TB_MENU"" (
 	PRIMARY KEY(""Name"")
 );";
 
-			public const string GetQueryCreateQuery = @"
-CREATE TABLE ""TB_QUERY"" (
-	""Name""	TEXT NOT NULL,
-	""Version""	TEXT NOT NULL,
-	""Query""	TEXT,
-	PRIMARY KEY(""Name"")
-);";
-
 			public const string GetQueryCreateMemo = @"
 CREATE TABLE ""TB_MEMO"" (
 	""Sequence""	INTEGER,
@@ -73,32 +65,22 @@ CREATE TABLE ""TB_MEMO"" (
 	""ContentsRTF""	TEXT,
 	""WallPaper""	TEXT,
 	""Location""	TEXT,
+	""Size""	TEXT,
 	PRIMARY KEY(""Sequence"" AUTOINCREMENT)
 );
 ";
 
-			public const string GetQueryInsertQueryData = @"
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetProjectAllName', '0001', 'SELECT ProjectName FROM TB_PROJECT');
+			public const string GetQueryInsertQueryData1 = @"
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
 VALUES('GetDataProject', '0001', 'SELECT Memo, MemoRtf FROM TB_PROJECT WHERE ProjectName = @ProjectName');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetDataSource', '0001', 'SELECT GroupName, SourceName, Type ,Path FROM TB_SOURCE WHERE ProjectName = @ProjectName ORDER BY GroupName');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetDataDocument', '0001', 'SELECT DocumentName, Path, GroupName FROM TB_DOCUMENT WHERE ProjectName = @ProjectName ORDER BY GroupName');
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
 VALUES('GetDataWorkList', '0001', 'SELECT * FROM TB_WORKLIST');
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
 VALUES('GetDataWorkItem', '0001', 'SELECT * FROM TB_WORKLIST WHERE WorkName=@WorkName ');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetMemoUpdate', '0001', 'UPDATE TB_PROJECT SET Memo = @MemoString, MemoRtf = @MemoRtf WHERE ProjectName = @ProjectName');
+
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
 VALUES('GetMenu', '0001', 'SELECT * FROM TB_MENU ORDER BY Sequence DESC');
@@ -110,36 +92,6 @@ INSERT INTO TB_QUERY
 VALUES('SetWorkItemDelete', '0001', 'DELETE FROM TB_WORKLIST WHERE WorkName=@WorkName');
 INSERT INTO TB_QUERY
 (Name, Version, ""Query"")
-VALUES('SetProjectAdd', '0001', 'INSERT INTO TB_PROJECT (ProjectName, CreateTime) VALUES (@ProjectName, @CreateTime) ');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetProjectMemo', '0001', 'SELECT Memo,MemoRtf FROM TB_PROJECT WHERE ProjectName=@ProjectName');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetDocumentAdd', '0001', 'INSERT INTO TB_DOCUMENT (ProjectName,DocumentName,Path,GroupName,CreateTime,LastEventTime) VALUES (@ProjectName,@Name,@Path,@GroupName,@CreateTime,@LastEventTime)');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetSourceAdd', '0001', 'INSERT INTO TB_SOURCE (ProjectName,SourceName,Type,Path,GroupName,CreateTime,LastEventTime) VALUES (@ProjectName,@Name,@Type,@Path,@GroupName,@CreateTime,@LastEventTime)');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetDocumentDelete', '0001', 'DELETE FROM TB_DOCUMENT WHERE Path=@Path');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetSourceDelete', '0001', 'DELETE FROM TB_SOURCE WHERE Path=@Path');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetDocumentMove', '0001', 'UPDATE TB_DOCUMENT SET GroupName = @GroupName, Path = @newPath WHERE Path = @oldPath');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetSourceMove', '0001', 'UPDATE TB_SOURCE SET GroupName = @GroupName WHERE Path = @Path');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetSourceLastTimeUpdate', '0001', 'UPDATE TB_SOURCE SET LastEventTime = @LastEventTime WHERE Path = @Path');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetDocumentLastTimeUpdate', '0001', 'UPDATE TB_DOCUMENT SET LastEventTime = @LastEventTime WHERE Path = @Path');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
 VALUES('GetDataLastOpenFile', '0001', 'SELECT * FROM 
 (
 SELECT ''DOCUMENT'' as Type, ProjectName, DocumentName as FileName, Path, GroupName, LastEventTime FROM TB_DOCUMENT 
@@ -147,34 +99,42 @@ UNION
 SELECT ''SOURCE'' as Type, ProjectName, SourceName as FileName, Path, GroupName, LastEventTime FROM TB_SOURCE
 )
 ORDER BY LastEventTime DESC');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetDocumentFileReName', '0001', 'UPDATE TB_DOCUMENT SET DocumentName=@name, Path = @newPath WHERE Path = @oldPath');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetDataStickerMemoAll', '0001', 'SELECT * FROM TB_MEMO');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetStickerMemoAdd', '0001', 'INSERT INTO TB_MEMO (WallPaper) VALUES (@WallPaper) ');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetStickerMemoUpdate', '0001', 'UPDATE TB_MEMO SET Contents = @Contents, ContentsRTF = @ContentRTF WHERE Sequence = @Sequence');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('GetDataStickerMemoMaxSequence', '0001', 'SELECT MAX(Sequence) FROM TB_MEMO');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetStickerMemoWallPaperChanged', '0001', 'UPDATE TB_MEMO SET WallPaper=@WallPaper WHERE Sequence = @Sequence');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetStickerMemoLocationChanged', '0001', 'UPDATE TB_MEMO SET Location=@Location WHERE Sequence = @Sequence');
-INSERT INTO TB_QUERY
-(Name, Version, ""Query"")
-VALUES('SetStickerMemoDelete', '0001', 'DELETE FROM TB_MEMO WHERE Sequence=@SequenceDELETE FROM TB_MEMO WHERE Sequence=@Sequence');
+
+
+
 
 ";
 
 			public const string GetQueryString = @"SELECT Query FROM TB_QUERY WHERE Name=@Name AND Version=@Version ";
+			public const string GetColumnCheck = @"SELECT sql FROM sqlite_master WHERE name=@TableName AND sql LIKE @Value ";
+			public const string GetColumnAdd = @"ALTER TABLE @@TableName ADD COLUMN @@ColumName TEXT; ";
+
+			//Memo
+			public const string GetDataStickerMemoAll = @"SELECT * FROM TB_MEMO";
+			public const string SetStickerMemoAdd = @"INSERT INTO TB_MEMO (WallPaper) VALUES (@WallPaper) ";
+			public const string SetStickerMemoUpdate = @"UPDATE TB_MEMO SET Contents = @Contents, ContentsRTF = @ContentRTF WHERE Sequence = @Sequence";
+			public const string GetDataStickerMemoMaxSequence = @"SELECT MAX(Sequence) as Sequence, Contents FROM TB_MEMO";
+			public const string SetStickerMemoWallPaperChanged = @"UPDATE TB_MEMO SET WallPaper=@WallPaper WHERE Sequence = @Sequence";
+			public const string SetStickerMemoLocationChanged = @"UPDATE TB_MEMO SET Location=@Location WHERE Sequence = @Sequence";
+			public const string SetStickerMemoSizeChanged = @"UPDATE TB_MEMO SET Size=@Size WHERE Sequence = @Sequence";
+			public const string SetStickerMemoDelete = @"DELETE FROM TB_MEMO WHERE Sequence=@Sequence";
+
+			//Project
+			public const string SetMemoUpdate = @"UPDATE TB_PROJECT SET Memo = @MemoString, MemoRtf = @MemoRtf WHERE ProjectName = @ProjectName";
+			public const string SetDocumentAdd = @"INSERT INTO TB_DOCUMENT (ProjectName,DocumentName,Path,GroupName,CreateTime,LastEventTime) VALUES (@ProjectName,@Name,@Path,@GroupName,@CreateTime,@LastEventTime)";
+			public const string SetSourceAdd = @"INSERT INTO TB_SOURCE (ProjectName,SourceName,Type,Path,GroupName,CreateTime,LastEventTime) VALUES (@ProjectName,@Name,@Type,@Path,@GroupName,@CreateTime,@LastEventTime)";
+			public const string GetProjectAllName = @"SELECT ProjectName FROM TB_PROJECT";
+			public const string GetProjectMemo = @"SELECT Memo,MemoRtf FROM TB_PROJECT WHERE ProjectName=@ProjectName";
+			public const string GetDataDocument = @"SELECT DocumentName, Path, GroupName FROM TB_DOCUMENT WHERE ProjectName = @ProjectName ORDER BY GroupName";
+			public const string GetDataSource = @"SELECT GroupName, SourceName, Type ,Path FROM TB_SOURCE WHERE ProjectName = @ProjectName ORDER BY GroupName";
+			public const string SetDocumentFileReName = @"UPDATE TB_DOCUMENT SET DocumentName=@name, Path = @newPath WHERE Path = @oldPath";
+			public const string SetDocumentDelete = @"DELETE FROM TB_DOCUMENT WHERE Path=@Path";
+			public const string SetSourceDelete = @"DELETE FROM TB_SOURCE WHERE Path=@Path";
+			public const string SetDocumentLastTimeUpdate = @"UPDATE TB_DOCUMENT SET LastEventTime = @LastEventTime WHERE Path = @Path";
+			public const string SetSourceLastTimeUpdate = @"UPDATE TB_SOURCE SET LastEventTime = @LastEventTime WHERE Path = @Path";
+			public const string SetDocumentMove = @"UPDATE TB_DOCUMENT SET GroupName = @GroupName, Path = @newPath WHERE Path = @oldPath";
+			public const string SetSourceMove = @"UPDATE TB_SOURCE SET GroupName = @GroupName WHERE Path = @Path";
+			public const string SetProjectAdd = @"INSERT INTO TB_PROJECT (ProjectName, CreateTime) VALUES (@ProjectName, @CreateTime) ";
 		}
 	}
 }

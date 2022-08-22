@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WorkDriveStorage.CustomControls;
 using WorkDriveStorage.FrameWork;
+using WorkDriveStorage.FrameWork.Database;
 using WorkDriveStorage.Popup;
 
 namespace WorkDriveStorage
@@ -46,7 +47,7 @@ namespace WorkDriveStorage
 
         private void init()
         {
-            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData("GetDataStickerMemoAll", "0001");
+            DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetDataStickerMemoAll);
 
             foreach (DataRow row in dt.Rows)
             {
@@ -55,6 +56,7 @@ namespace WorkDriveStorage
                 string textRtf = row["ContentsRTF"].ToString();
                 bool wallPaper = bool.Parse(row["WallPaper"].ToString());
                 string[] Location = row["Location"].ToString() == "" ? new string[] { "0", "0" } : row["Location"].ToString().Split(',');
+                string[] Sizes = row["Size"].ToString() == "" ? new string[] { "300", "400" } : row["Size"].ToString().Split(',');
 
                 MemoItem memo = new MemoItem(memoKey, text, textRtf, wallPaper);
                 memo.Margin = new Thickness(7);
@@ -67,6 +69,8 @@ namespace WorkDriveStorage
                     memoWindow.WindowStartupLocation = WindowStartupLocation.Manual;
                     memoWindow.Top = double.Parse(Location[0]);
                     memoWindow.Left = double.Parse(Location[1]);
+                    memoWindow.Width = double.Parse(Sizes[0]);
+                    memoWindow.Height = double.Parse(Sizes[1]);
                     _windowMemo.Add(memoKey, memoWindow);
                 }
             }
@@ -109,27 +113,39 @@ namespace WorkDriveStorage
         }
 
 
-        public void MemoWindowShow(string memoKey, MemoWindow win)
+        public void MemoWindowShow(string memoKey, MemoWindow win, double w = 0, double h = 0)
         {
             _windowMemo.Add(memoKey, win);
+
+            if (w > 0 && h > 0)
+            {
+                win.Width = w;
+                win.Height = h;
+            }
             win.Show();
         }
 
-        public void Add()
+        public void Add(bool NowShow = false)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("WallPaper", "False");
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoAdd", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoAdd, param);
 
             if (result)
             {
-                DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData("GetDataStickerMemoMaxSequence", "0001");
-                string memoKey = dt.Rows[0][0].ToString();
-
+                DataTable dt = ServiceProvider.StaticService().MainDatabase.GetData(GetQueryString.SQLite.GetDataStickerMemoMaxSequence);
+                string memoKey = dt.Rows[0]["Sequence"].ToString();
+                string memoContents = dt.Rows[0]["Contents"].ToString();
 
                 MemoItem memo = new MemoItem(dt.Rows[0][0].ToString(), string.Empty, string.Empty, bool.Parse("False"));
                 memo.Margin = new Thickness(7);
-                _itemDir.Add(memoKey, memo); 
+                _itemDir.Add(memoKey, memo);
+
+                if (NowShow)
+                {
+                    MemoWindow win = new MemoWindow(memoKey, memoContents);
+                    MemoWindowShow(memoKey, win);
+                }
             }
         }
 
@@ -139,7 +155,7 @@ namespace WorkDriveStorage
             param.Add("Contents", memoText.Replace("'", "''"));
             param.Add("ContentRTF", memoRtf.Replace("'", "''"));
             param.Add("Sequence", memoKey);
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoUpdate", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoUpdate, param);
         }
 
         public void WallPaperChanged(string memoKey, bool value)
@@ -147,7 +163,7 @@ namespace WorkDriveStorage
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("WallPaper", value.ToString());
             param.Add("Sequence", memoKey);
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoWallPaperChanged", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoWallPaperChanged, param);
         }
 
         public void MemoWindowLocationChanged(string memoKey, string LocationValue)
@@ -155,21 +171,32 @@ namespace WorkDriveStorage
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("Location", LocationValue);
             param.Add("Sequence", memoKey);
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoLocationChanged", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoLocationChanged, param);
+        }
+
+        public void MemoWindowSizeChanged(string memoKey, string Value)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("Size", Value);
+            param.Add("Sequence", memoKey);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoSizeChanged, param);
         }
 
         public void Delete(string memoKey)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("Sequence", memoKey);
-            bool result = ServiceProvider.StaticService().MainDatabase.SetData("SetStickerMemoDelete", "0001", param);
+            bool result = ServiceProvider.StaticService().MainDatabase.SetData(GetQueryString.SQLite.SetStickerMemoDelete, param);
 
             if (result)
             {
                 _itemDir.Remove(memoKey);
 
-                _windowMemo[memoKey].Close();
-                _windowMemo.Remove(memoKey);
+                if (_windowMemo.ContainsKey(memoKey))
+                {
+                    _windowMemo[memoKey].Close();
+                    _windowMemo.Remove(memoKey);
+                }
 
                 MemoDelete_Event();
             }
