@@ -15,6 +15,11 @@ namespace WorkDriveStorage.FrameWork
 
         public MainDatabase()
         {
+
+        }
+
+        public void init()
+        {
             try
             {
                 if (_db == null)
@@ -78,7 +83,14 @@ namespace WorkDriveStorage.FrameWork
                     SQLiteConnection.CreateFile(filePath);
                 }
 
-                CreateTable();
+                if (_db == null)
+                {
+                    string path = AppDomain.CurrentDomain.BaseDirectory;
+                    string name = "WorkDriveStorage";
+                    _db = new SQLiteManager(path, name);
+                    CreateTable();
+                }
+
 
                 return true;
             }

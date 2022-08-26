@@ -58,45 +58,53 @@ namespace WorkDriveStorage.Popup
             bool finalResult = true;
             try
             {
-                string[] files = txtFilePath.Text.Split(';');
-
-                int emptyIndex = 0;
-
-                for (int a = 0; a < files.Length; a++)
+                if (Constant.FileType.Document == _fileType)
                 {
-                    if(string.IsNullOrEmpty(files[a]))
+                    string[] files = txtFilePath.Text.Split(';');
+
+                    int emptyIndex = 0;
+
+                    for (int a = 0; a < files.Length; a++)
                     {
-                        emptyIndex = a;
+                        if (string.IsNullOrEmpty(files[a]))
+                        {
+                            emptyIndex = a;
+                        }
+                    }
+
+                    files = files.Where((source, index) => index != emptyIndex).ToArray();
+
+                    foreach (string file in files)
+                    {
+                        FileInfo fi = new FileInfo(_mainPath + "\\" + file);
+
+                        if (fi.Exists)
+                        {
+                            bool result = Utility.SetFileAdd(fi, _fileType, _projectName, txtGroupNmae.Text);
+
+                            resultList.Add(result);
+                        }
+                        else
+                        {
+                            CustomControlMessageBox.ShowError("The file could not be found.\r\n" + fi);
+                        }
+                    }
+
+                    for (int i = 0; i < resultList.Count; i++)
+                    {
+                        if (!resultList[i])
+                        {
+                            finalResult = false;
+                        }
                     }
                 }
-
-                files = files.Where((source, index) => index != emptyIndex).ToArray();
-
-                foreach (string file in files)
+                else
                 {
-                    FileInfo fi = new FileInfo(_mainPath + "\\" + file);
-
-                    if (fi.Exists)
-                    {
-                        bool result = Utility.SetFileAdd(fi, _fileType, _projectName, txtGroupNmae.Text);
-
-                        resultList.Add(result);
-                    }
-                    else
-                    {
-                        CustomControlMessageBox.ShowError("The file could not be found.\r\n" + fi);
-                    }
+                    FileInfo fi = new FileInfo(txtFilePath.Text);
+                    finalResult = Utility.SetFileAdd(fi, _fileType, _projectName, txtGroupNmae.Text);
                 }
 
-                for(int i=0; i<resultList.Count; i++)
-                {
-                    if (!resultList[i])
-                    {
-                        finalResult = false;
-                    }
-                }
-
-                switch(finalResult)
+                switch (finalResult)
                 {
                     case true:
                         CustomControlMessageBox.Show("파일 추가 성공");

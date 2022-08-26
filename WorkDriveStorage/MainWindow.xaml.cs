@@ -25,6 +25,7 @@ namespace WorkDriveStorage
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool initFlag = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +50,8 @@ namespace WorkDriveStorage
             }
             else
             {
+                initFlag = true;
+                ServiceProvider.StaticService().MainDatabase.init();
                 MemoServiceProvider.StaticService();
 
 
@@ -165,7 +168,8 @@ namespace WorkDriveStorage
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MemoServiceProvider.StaticService().MemoWindowInit();
+            if (initFlag)
+                MemoServiceProvider.StaticService().MemoWindowInit();
         }
     }
 }

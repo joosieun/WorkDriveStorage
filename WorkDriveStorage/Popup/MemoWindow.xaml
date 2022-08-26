@@ -33,10 +33,6 @@
 
     <Border BorderBrush="Black" BorderThickness="0.5">
         <Grid Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="13*"/>
-                <ColumnDefinition Width="287*"/>
-            </Grid.ColumnDefinitions>
 
             <DockPanel Grid.ColumnSpan="2">
                 <Grid Panel.ZIndex ="1"
@@ -74,6 +70,18 @@
                             <materialDesign:PackIcon Kind="CloseThick"/>
                         </Button>
 
+                        <!--<materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" 
+                                         StaysOpen="False"
+                                         Margin="10">
+                            <StackPanel Width="150">
+                                <Button Content="Settings"/>
+                                <Button Content="Account"/>
+                                <Button Content="Help"/>
+                                <Separator/>
+                                <Button Content="Logout"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>-->
+                        
                         <!-- 추가 -->
                         <Button x:Name="ButtonAdd"
                             DockPanel.Dock="Left"
@@ -85,7 +93,7 @@
                             BorderBrush="{x:Null}" 
                             Padding="0"
                             Foreground="#FF2C2C2C"
-                            Click="AddButton_Click">
+                            Click="AddButton_Click" Cursor="Hand">
                             <materialDesign:PackIcon Kind="MessagePlus"/>
                         </Button>
 

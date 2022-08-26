@@ -23,6 +23,8 @@ namespace WorkDriveStorage.Popup
     /// </summary>
     public partial class MemoWindow : Window
     {
+
+
         private string _memoKey = string.Empty;
 
         public MemoWindow(string key, string contents)
@@ -32,6 +34,8 @@ namespace WorkDriveStorage.Popup
             _memoKey = key;
             SetRTFText(contents);
             SetFontSize(txtMemo, 12);
+
+            //this.WindowStyle = WindowStyle.ToolWindow;
         }
 
         private void txtMemo_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)

@@ -28,7 +28,7 @@
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                     VerticalAlignment="Center" 
                     IsReadOnly="True"
-                    Width="417" Height="35"/>
+                    Width="417" Height="35" Cursor="Arrow"/>
                 <Button  
                     Margin="5 0 0 0"
                     Content="{materialDesign:PackIcon DotsHorizontal}"  
